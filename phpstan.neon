@@ -1,0 +1,19 @@
+includes:
+    - vendor/larastan/larastan/extension.neon
+
+parameters:
+    level: 9
+    paths:
+        - src
+    tmpDir: build/phpstan
+    treatPhpDocTypesAsCertain: false
+    # Guardian operates on any model using the Guardable trait, typed as `object`
+    # at the public boundary on purpose. Those dynamic relation/helper calls are
+    # safe but unprovable statically — ignore just that pattern.
+    reportUnmatchedIgnoredErrors: false
+    ignoreErrors:
+        - '#Call to an undefined method object::#'
+        - '#Call to an undefined method Illuminate\\Database\\Eloquent\\Model::#'
+        - '#Variable method call on object#'
+        # Traits are analysed via the host model, not standalone.
+        - identifier: trait.unused

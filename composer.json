@@ -1,0 +1,76 @@
+{
+    "$schema": "https://getcomposer.org/schema.json",
+    "name": "masq/guardian",
+    "description": "Suspicion-scoring trust & moderation engine for Laravel. Pluggable detectors accrue suspicion points; thresholds flag, restrict, queue for review, or ban.",
+    "keywords": [
+        "laravel",
+        "anti-cheat",
+        "anticheat",
+        "fraud",
+        "moderation",
+        "trust",
+        "reputation",
+        "ban"
+    ],
+    "license": "MIT",
+    "type": "library",
+    "version": "1.0.0",
+    "authors": [
+        {
+            "name": "Masq Systems"
+        }
+    ],
+    "require": {
+        "php": "^8.3",
+        "illuminate/contracts": "^11.0 || ^12.0 || ^13.0",
+        "illuminate/database": "^11.0 || ^12.0 || ^13.0",
+        "illuminate/support": "^11.0 || ^12.0 || ^13.0",
+        "nesbot/carbon": "^2.72 || ^3.0"
+    },
+    "require-dev": {
+        "orchestra/testbench": "^9.0 || ^10.0 || ^11.0",
+        "pestphp/pest": "^3.0 || ^4.0",
+        "laravel/pint": "^1.29",
+        "larastan/larastan": "^3.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Masq\\Guardian\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Masq\\Guardian\\Tests\\": "tests/"
+        }
+    },
+    "scripts": {
+        "test": "pest",
+        "test:coverage": "pest --coverage",
+        "lint": "pint",
+        "lint:test": "pint --test",
+        "stan": "phpstan analyse",
+        "check": [
+            "@lint:test",
+            "@stan",
+            "@test"
+        ]
+    },
+    "config": {
+        "sort-packages": true,
+        "allow-plugins": {
+            "pestphp/pest-plugin": true
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Masq\\Guardian\\GuardianServiceProvider"
+            ],
+            "aliases": {
+                "Guardian": "Masq\\Guardian\\Facades\\Guardian"
+            }
+        }
+    },
+    "minimum-stability": "stable",
+    "prefer-stable": true
+}
