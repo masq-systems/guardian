@@ -20,6 +20,8 @@ use Masq\Guardian\Enums\ReviewStatus;
  * @property string|null $decided_by
  * @property string|null $notes
  * @property CarbonInterface|null $decided_at
+ * @property CarbonInterface|null $created_at
+ * @property CarbonInterface|null $updated_at
  */
 class ModeratorReview extends Model
 {
