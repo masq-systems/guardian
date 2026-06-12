@@ -4,6 +4,16 @@ All notable changes to `masq/guardian` will be documented in this file.
 
 ## [Unreleased]
 
+### Fixed
+- **Laravel Octane: per-request state no longer bleeds across requests.** The
+  `Guardian` and `TrackManager` singletons live for the whole worker, so
+  ad-hoc detectors from `Guardian::register()` (documented "this request only")
+  and any runtime `DetectorRegistry::define()/disable()` could leak into the
+  next request on the same worker. The provider now resets that state on
+  Octane's `RequestReceived` event via the new `Guardian::flushRequestState()`
+  and `TrackManager::flush()`. No-op (and zero new dependency) when Octane
+  isn't installed. Config-file detector setup is unaffected.
+
 ### Added
 - Trait convenience methods `$user->ban($reason = null)` and `$user->unban()`
   (delegate to `Guardian::ban()` / `Guardian::clear()`, track-aware).

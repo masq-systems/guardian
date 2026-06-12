@@ -57,6 +57,18 @@ final class Guardian
         return $this;
     }
 
+    /**
+     * Drop all ad-hoc detectors registered via register() for the current
+     * request. This singleton lives for the whole worker under Laravel Octane,
+     * so register()'s "this request only" contract requires that $runtime be
+     * cleared between requests — the GuardianServiceProvider wires this to
+     * Octane's RequestReceived event. A no-op (and harmless) without Octane.
+     */
+    public function flushRequestState(): void
+    {
+        $this->runtime = [];
+    }
+
     /** @return array<int, Detector> All active detectors for a track (config + runtime). */
     public function detectors(?string $track = null): array
     {

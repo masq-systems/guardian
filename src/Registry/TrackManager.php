@@ -64,6 +64,19 @@ final class TrackManager
     }
 
     /**
+     * Discard memoised per-track state (config / decay / registry). This
+     * singleton lives for the whole worker under Laravel Octane; flushing here
+     * means any runtime DetectorRegistry::define()/disable() mutation cannot
+     * bleed into the next request — tracks are rebuilt from the boot config
+     * snapshot ($root, readonly) on next access. Config-file detector setup is
+     * preserved; only programmatic per-request changes are dropped.
+     */
+    public function flush(): void
+    {
+        $this->built = [];
+    }
+
+    /**
      * @return array{config: array<string, mixed>, decay: DecayManager, registry: DetectorRegistry}
      */
     private function resolve(string $track): array

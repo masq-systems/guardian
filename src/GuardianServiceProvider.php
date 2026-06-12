@@ -5,8 +5,10 @@ declare(strict_types=1);
 namespace Masq\Guardian;
 
 use Illuminate\Contracts\Cache\Factory as CacheFactory;
+use Illuminate\Contracts\Events\Dispatcher;
 use Illuminate\Routing\Router;
 use Illuminate\Support\ServiceProvider;
+use Laravel\Octane\Events\RequestReceived;
 use Masq\Guardian\Engine\ScoringEngine;
 use Masq\Guardian\Enums\TrustState;
 use Masq\Guardian\Http\Middleware\EnforceTrust;
@@ -73,5 +75,33 @@ final class GuardianServiceProvider extends ServiceProvider
 
         // Route middleware: ->middleware('guardian:banned') or 'guardian:review,behavior'
         $this->app->make(Router::class)->aliasMiddleware('guardian', EnforceTrust::class);
+
+        $this->resetRequestStateOnOctane();
+    }
+
+    /**
+     * Under Laravel Octane the worker stays alive across requests, so the
+     * Guardian and TrackManager singletons keep their in-memory state. Two
+     * pieces of that state are per-request by contract — ad-hoc detectors from
+     * Guardian::register() and any runtime registry define()/disable() — and
+     * must be cleared at the start of each request so one request can't see
+     * another's detectors. We only reset state that was actually resolved, and
+     * the whole hook is skipped (no-op) when Octane isn't installed.
+     */
+    private function resetRequestStateOnOctane(): void
+    {
+        if (! class_exists(RequestReceived::class)) {
+            return;
+        }
+
+        $this->app->make(Dispatcher::class)->listen(RequestReceived::class, function (): void {
+            if ($this->app->resolved(Guardian::class)) {
+                $this->app->make(Guardian::class)->flushRequestState();
+            }
+
+            if ($this->app->resolved(TrackManager::class)) {
+                $this->app->make(TrackManager::class)->flush();
+            }
+        });
     }
 }
