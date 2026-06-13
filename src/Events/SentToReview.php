@@ -7,7 +7,6 @@ namespace Masq\Guardian\Events;
 use Illuminate\Foundation\Events\Dispatchable;
 use Masq\Guardian\Models\ModeratorReview;
 
-/** Fired when a subject is queued for human moderation. */
 class SentToReview
 {
     use Dispatchable;

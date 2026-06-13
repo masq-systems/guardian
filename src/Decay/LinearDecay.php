@@ -7,7 +7,6 @@ namespace Masq\Guardian\Decay;
 use Carbon\CarbonInterface;
 use Masq\Guardian\Contracts\DecayStrategy;
 
-/** Points fade linearly to zero over $days. */
 final class LinearDecay implements DecayStrategy
 {
     public function __construct(private readonly int $days = 30) {}

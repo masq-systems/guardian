@@ -19,7 +19,6 @@ enum TrustState: string implements TrustStateContract
         return $this->value;
     }
 
-    /** Ordinal severity used for comparing / clamping states. */
     public function level(): int
     {
         return match ($this) {
@@ -51,7 +50,9 @@ enum TrustState: string implements TrustStateContract
         return $key === null ? null : self::tryFrom($key);
     }
 
-    /** @return array<int, self> */
+    /**
+     * @return list<self>
+     */
     public static function all(): array
     {
         return self::cases();

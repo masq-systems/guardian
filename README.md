@@ -208,28 +208,28 @@ config options:
 use Masq\Guardian\Detectors\AbstractDetector;
 use Masq\Guardian\ValueObjects\Signal;
 
-final class StepRateDetector extends AbstractDetector
+final class RateLimitDetector extends AbstractDetector
 {
     public function inspect(object $subject, array $context = []): ?Signal
     {
-        $peak = max($context['slices'] ?? [0]);
+        $hits = $context['hits'] ?? 0;
 
-        return $peak > $this->option('limit', 3000)
-            ? Signal::hard($this->key(), 60, ['peak' => $peak])
+        return $hits > $this->option('limit', 100)
+            ? Signal::hard($this->key(), 60, ['hits' => $hits])
             : null;          // null = nothing to report
     }
 }
 ```
 
 Register it in config (the array keys after `class`/`enabled` arrive as
-`$options`, read via `$this->option('limit', 3000)`):
+`$options`, read via `$this->option('limit', 100)`):
 
 ```php
 'detectors' => [
-    'step_rate' => [
-        'class'   => App\Guardian\Detectors\StepRateDetector::class,
+    'rate_limit' => [
+        'class'   => App\Guardian\Detectors\RateLimitDetector::class,
         'enabled' => true,
-        'limit'   => 3000,
+        'limit'   => 100,
     ],
 ],
 ```
@@ -237,9 +237,9 @@ Register it in config (the array keys after `class`/`enabled` arrive as
 Then run checks:
 
 ```php
-Guardian::inspect($user, ['slices' => $slices]);            // every enabled detector
-Guardian::run('step_rate', $user, ['slices' => $slices]);   // one by key
-Guardian::register($adHocDetector);                          // runtime only
+Guardian::inspect($user, ['hits' => $hits]);            // every enabled detector
+Guardian::run('rate_limit', $user, ['hits' => $hits]);  // one by key
+Guardian::register($adHocDetector);                      // runtime only
 ```
 
 `$context` is just the data your detectors need — you decide its shape.

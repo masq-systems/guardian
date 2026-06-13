@@ -7,7 +7,6 @@ namespace Masq\Guardian\Events;
 use Illuminate\Foundation\Events\Dispatchable;
 use Masq\Guardian\Contracts\TrustStateContract;
 
-/** Fired whenever a subject's trust state changes (up or down). */
 class ThresholdCrossed
 {
     use Dispatchable;

@@ -9,14 +9,6 @@ use Masq\Guardian\Enums\Severity;
 use Masq\Guardian\Support\EnumValue;
 use UnitEnum;
 
-/**
- * Immutable result emitted by a detector. Carries the points to accrue,
- * how they decay, evidence for moderators, and (for hard signals) whether
- * the violation is fatal — i.e. eligible for an automatic permanent ban.
- *
- * `$detector`, `$decay` and `$reason` accept a string or an enum (backed enum
- * resolves to its value, a pure enum to its name).
- */
 final class Signal
 {
     public readonly string $detector;
@@ -59,8 +51,6 @@ final class Signal
     }
 
     /**
-     * A certain, physically-impossible violation that should ban immediately.
-     *
      * @param  array<string, mixed>  $evidence
      */
     public static function fatal(string|BackedEnum|UnitEnum $detector, array $evidence = [], string|BackedEnum|UnitEnum|null $reason = null, int $points = 1000): self

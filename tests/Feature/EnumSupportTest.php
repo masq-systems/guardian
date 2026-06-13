@@ -41,7 +41,7 @@ it('accepts an enum key in the registry', function (): void {
 
 it('casts the moderator review status to an enum', function (): void {
     $user = makeUser();
-    $user->raiseSuspicion(Signal::soft('test', 90, decay: 'none')); // -> review + case
+    $user->raiseSuspicion(Signal::soft('test', 90, decay: 'none'));
 
     $review = $user->moderatorReviews()->sole();
     expect($review->status)->toBe(ReviewStatus::Pending)

@@ -34,7 +34,6 @@ it('clears auto-flags but keeps moderator decisions', function (): void {
     $a->clearAutoFlags();
     expect($a->isGuardianFlagged())->toBeFalse();
 
-    // A moderator-confirmed flag must survive clearAutoFlags().
     $a->guardianFlags()->create([
         'track' => 'default',
         'state' => GuardianFlag::STATE_CONFIRMED,

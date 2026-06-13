@@ -10,12 +10,11 @@ use Masq\Guardian\Events\SentToReview;
 use Masq\Guardian\Models\ModeratorReview;
 use Masq\Guardian\Models\SuspicionEvent;
 
-/**
- * Open a pending moderation case (deduplicated) snapshotting the current
- * score and the evidence that led here.
- */
 final class QueueForReviewAction implements Action
 {
+    /**
+     * @param  array<string, mixed>  $context
+     */
     public function handle(object $subject, TrustStateContract $state, array $context = []): void
     {
         $track = is_string($context['track'] ?? null) ? $context['track'] : 'default';
@@ -29,7 +28,6 @@ final class QueueForReviewAction implements Action
             return;
         }
 
-        /** @var array<int, array<string, mixed>> $recent */
         $recent = $subject->suspicionEvents()
             ->where('track', $track)
             ->latest()
@@ -45,7 +43,6 @@ final class QueueForReviewAction implements Action
             ])
             ->all();
 
-        /** @var ModeratorReview $review */
         $review = $subject->moderatorReviews()->create([
             'track' => $track,
             'status' => ModeratorReview::STATUS_PENDING,

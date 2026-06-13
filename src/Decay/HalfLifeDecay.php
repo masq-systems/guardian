@@ -7,7 +7,6 @@ namespace Masq\Guardian\Decay;
 use Carbon\CarbonInterface;
 use Masq\Guardian\Contracts\DecayStrategy;
 
-/** Exponential decay: points halve every $days (half-life). Never reaches exactly zero. */
 final class HalfLifeDecay implements DecayStrategy
 {
     public function __construct(private readonly int $days = 14) {}
@@ -26,7 +25,7 @@ final class HalfLifeDecay implements DecayStrategy
 
     public function expiresAt(CarbonInterface $occurredAt): CarbonInterface
     {
-        // Asymptotic — treat as expired (rounds to 0) after ~10 half-lives.
+
         return $occurredAt->copy()->addDays($this->days * 10);
     }
 }

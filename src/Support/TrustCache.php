@@ -8,14 +8,6 @@ use Illuminate\Contracts\Cache\Repository as CacheRepository;
 use Illuminate\Database\Eloquent\Model;
 use Masq\Guardian\Models\TrustProfile;
 
-/**
- * Caches a subject's trust standing per track so hot reads (isBanned() in
- * middleware, trustState() in views) never touch the database. The engine
- * refreshes the cache on every evaluation; reads fall back to the DB and
- * re-warm on a miss.
- *
- * @phpstan-type Standing array{score: int, state: string, banned: bool}
- */
 final class TrustCache
 {
     public function __construct(
@@ -26,15 +18,15 @@ final class TrustCache
     ) {}
 
     /**
-     * @return Standing
+     * @return array{score: int, state: string, banned: bool}
      */
     public function standing(object $subject, string $track): array
     {
         $key = $this->profileKey($subject, $track);
 
-        /** @var Standing|null $cached */
         $cached = $this->cache->get($key);
         if (is_array($cached)) {
+            /** @var array{score: int, state: string, banned: bool} $cached */
             return $cached;
         }
 
@@ -58,20 +50,15 @@ final class TrustCache
         $this->cache->forget($this->profileKey($subject, $track));
     }
 
-    /**
-     * Increment a rolling hit counter (for ThrottleHitDetector) and return the
-     * new count. The window resets the counter once it elapses.
-     */
     public function recordHit(object $subject, string $limiter, int $window, string $track): int
     {
         $key = $this->hitKey($subject, $limiter, $track);
 
         $this->cache->add($key, 0, $window);
 
-        /** @var int $count */
         $count = $this->cache->increment($key);
 
-        return $count;
+        return is_int($count) ? $count : 0;
     }
 
     public function hits(object $subject, string $limiter, string $track): int
@@ -82,7 +69,7 @@ final class TrustCache
     }
 
     /**
-     * @return Standing
+     * @return array{score: int, state: string, banned: bool}
      */
     private function toStanding(?TrustProfile $profile): array
     {

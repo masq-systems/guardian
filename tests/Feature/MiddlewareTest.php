@@ -31,11 +31,10 @@ it('blocks a banned subject', function (): void {
 
 it('blocks at a configurable state threshold', function (): void {
     $user = makeUser();
-    $user->raiseSuspicion(Signal::soft('t', 90, decay: 'none')); // -> review
+    $user->raiseSuspicion(Signal::soft('t', 90, decay: 'none'));
 
-    // review or worse is blocked...
     expect(fn () => runMiddleware($user, 'review'))->toThrow(HttpException::class);
-    // ...but a banned-only gate lets a merely-reviewed user through.
+
     expect(runMiddleware($user, 'banned'))->toBe('ok');
 });
 
@@ -44,5 +43,5 @@ it('tracks the check', function (): void {
     Guardian::track('behavior')->ban($user);
 
     expect(fn () => runMiddleware($user, 'banned', 'behavior'))->toThrow(HttpException::class);
-    expect(runMiddleware($user, 'banned'))->toBe('ok'); // default track clean
+    expect(runMiddleware($user, 'banned'))->toBe('ok');
 });

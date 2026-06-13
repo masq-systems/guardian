@@ -6,7 +6,6 @@ namespace Masq\Guardian\Events;
 
 use Illuminate\Foundation\Events\Dispatchable;
 
-/** Fired when a subject is automatically banned by a fatal hard signal. */
 class SubjectBanned
 {
     use Dispatchable;

@@ -13,7 +13,7 @@ it('tracks tracks independently', function (): void {
 
     expect($user->trustState('behavior'))->toBe(TrustState::Review)
         ->and($user->suspicionScore('behavior'))->toBe(90)
-        ->and($user->trustState())->toBe(TrustState::Trusted)   // default track untouched
+        ->and($user->trustState())->toBe(TrustState::Trusted)
         ->and($user->suspicionScore())->toBe(0);
 });
 

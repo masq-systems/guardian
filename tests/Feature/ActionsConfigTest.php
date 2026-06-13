@@ -6,16 +6,13 @@ use Masq\Guardian\Actions\FreezeAction;
 use Masq\Guardian\Enums\TrustState;
 use Masq\Guardian\ValueObjects\Signal;
 
-// The default package config uses the list form (['state' => TrustState::..]),
-// already exercised by AccrualTest. These cover the keyed-map forms.
-
 it('accepts actions keyed by the state value', function (): void {
     config()->set('guardian.tracks.default.actions', [
         'restricted' => [FreezeAction::class],
     ]);
 
     $user = makeUser();
-    $user->raiseSuspicion(Signal::soft('t', 55, decay: 'none')); // -> restricted
+    $user->raiseSuspicion(Signal::soft('t', 55, decay: 'none'));
 
     expect($user->fresh()->restricted)->toBeTrue();
 });

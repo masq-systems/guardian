@@ -7,26 +7,13 @@ namespace Masq\Guardian\Registry;
 use Illuminate\Contracts\Container\Container;
 use Masq\Guardian\Decay\DecayManager;
 
-/**
- * Resolves per-track configuration. A "track" is an independent trust track
- * (e.g. "default"/anti-cheat and "behavior") — each with its own thresholds,
- * detectors, actions and state, evaluated separately for the same subject.
- *
- * Config shape: top-level keys are SHARED (decay, cache, tables, ban_method,
- * prune_after_days); per-track rules (thresholds, soft_max_state, actions,
- * detectors, throttle_detector) live under `tracks.<name>`. An unknown track
- * falls back to the default track's rules.
- */
 final class TrackManager
 {
     /** @var array<string, array{config: array<string, mixed>, decay: DecayManager, registry: DetectorRegistry}> */
     private array $built = [];
 
     /**
-     * @param  array<string, mixed>  $root  the full guardian config
-     */
-    /**
-     * @param  array<string, mixed>  $root  the full guardian config
+     * @param  array<string, mixed>  $root
      */
     public function __construct(
         private readonly Container $container,
@@ -38,7 +25,9 @@ final class TrackManager
         return is_string($this->root['default_track'] ?? null) ? $this->root['default_track'] : 'default';
     }
 
-    /** @return array<int, string> */
+    /**
+     * @return list<string>
+     */
     public function names(): array
     {
         return array_values(array_unique([
@@ -47,7 +36,9 @@ final class TrackManager
         ]));
     }
 
-    /** @return array<string, mixed> */
+    /**
+     * @return array<string, mixed>
+     */
     public function config(string $track): array
     {
         return $this->resolve($track)['config'];
@@ -63,14 +54,6 @@ final class TrackManager
         return $this->resolve($track)['registry'];
     }
 
-    /**
-     * Discard memoised per-track state (config / decay / registry). This
-     * singleton lives for the whole worker under Laravel Octane; flushing here
-     * means any runtime DetectorRegistry::define()/disable() mutation cannot
-     * bleed into the next request — tracks are rebuilt from the boot config
-     * snapshot ($root, readonly) on next access. Config-file detector setup is
-     * preserved; only programmatic per-request changes are dropped.
-     */
     public function flush(): void
     {
         $this->built = [];
@@ -87,8 +70,7 @@ final class TrackManager
 
         $tracks = (array) ($this->root['tracks'] ?? []);
         $defaultRules = (array) ($tracks[$this->defaultTrack()] ?? []);
-        // A named track inherits the default track's rules for any key it omits;
-        // an unknown track is exactly the default track.
+
         $rules = array_replace($defaultRules, (array) ($tracks[$track] ?? []));
 
         $config = array_replace($this->root, $rules);

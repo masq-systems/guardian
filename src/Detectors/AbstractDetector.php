@@ -6,10 +6,6 @@ namespace Masq\Guardian\Detectors;
 
 use Masq\Guardian\Contracts\Detector;
 
-/**
- * Convenience base for detectors. Carries the config key + per-detector
- * options array so each check is self-contained and tunable from config.
- */
 abstract class AbstractDetector implements Detector
 {
     /**
@@ -25,7 +21,6 @@ abstract class AbstractDetector implements Detector
         return $this->key;
     }
 
-    /** Read a config option with a fallback default. */
     protected function option(string $name, mixed $default = null): mixed
     {
         return $this->options[$name] ?? $default;

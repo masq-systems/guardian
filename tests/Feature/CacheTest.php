@@ -12,13 +12,10 @@ it('serves trust standing from the cache, not the database', function (): void {
     $cache = app(TrustCache::class);
     expect($cache->standing($user, 'default')['banned'])->toBeTrue();
 
-    // Mutate the DB row directly behind the cache's back.
     $user->trustProfiles()->where('track', 'default')->update(['banned_at' => null, 'state' => 'trusted', 'score' => 0]);
 
-    // Read still reflects the cached (banned) standing.
     expect($user->fresh()->isBanned())->toBeTrue();
 
-    // After invalidation it re-warms from the database.
     $cache->forget($user, 'default');
     expect($user->fresh()->isBanned())->toBeFalse();
 });

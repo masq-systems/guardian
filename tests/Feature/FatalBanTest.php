@@ -36,7 +36,7 @@ it('keeps a ban permanent even after the score decays', function (): void {
     $user->raiseSuspicion(Signal::fatal('emulator'));
 
     $this->travel(60)->days();
-    $user->raiseSuspicion(Signal::soft('noise', 1)); // triggers re-evaluation
+    $user->raiseSuspicion(Signal::soft('noise', 1));
 
     expect($user->fresh()->trustState())->toBe(TrustState::Banned);
 });

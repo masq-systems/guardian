@@ -8,7 +8,7 @@ use Masq\Guardian\Facades\Guardian;
 it('does not score throttle hits below the threshold', function (): void {
     $user = makeUser();
 
-    for ($i = 0; $i < 4; $i++) {                 // threshold is 5
+    for ($i = 0; $i < 4; $i++) {
         Guardian::recordThrottleHit($user, 'login');
     }
 
@@ -27,11 +27,11 @@ it('scores and flags a subject that keeps hitting the throttle', function (): vo
     $fresh = $user->fresh();
     expect($fresh->suspicionScore())->toBeGreaterThan(0)
         ->and($fresh->isFlagged())->toBeTrue()
-        ->and($fresh->isBanned())->toBeFalse(); // throttle is soft — never auto-bans
+        ->and($fresh->isBanned())->toBeFalse();
 });
 
 it('is a no-op when the throttle detector is disabled', function (): void {
-    // Disable before Guardian is first resolved so the lazy singletons pick it up.
+
     config()->set('guardian.tracks.default.detectors.throttle_hits.enabled', false);
 
     $user = makeUser();

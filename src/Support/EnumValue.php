@@ -7,10 +7,6 @@ namespace Masq\Guardian\Support;
 use BackedEnum;
 use UnitEnum;
 
-/**
- * Normalises a "string or enum" input to a plain string:
- * a backed enum yields its value, a pure enum its name, a string is unchanged.
- */
 final class EnumValue
 {
     public static function toString(string|BackedEnum|UnitEnum|null $value): ?string

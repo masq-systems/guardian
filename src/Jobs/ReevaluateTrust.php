@@ -14,13 +14,6 @@ use Masq\Guardian\Facades\Guardian;
 use Masq\Guardian\Models\SuspicionEvent;
 use Masq\Guardian\Models\TrustProfile;
 
-/**
- * Periodic maintenance: recompute decayed scores so subjects can recover to
- * lower trust states, and prune fully-decayed events from the audit log.
- *
- * Schedule daily, e.g. in routes/console.php:
- *   Schedule::job(new ReevaluateTrust)->daily();
- */
 class ReevaluateTrust implements ShouldQueue
 {
     use Dispatchable;

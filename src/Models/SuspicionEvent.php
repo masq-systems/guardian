@@ -10,18 +10,16 @@ use Illuminate\Database\Eloquent\Relations\MorphTo;
 use Masq\Guardian\Enums\Severity;
 
 /**
- * Immutable log row: one suspicion signal raised against a subject.
- *
  * @property int $id
  * @property string $detector
  * @property int $points
  * @property Severity $severity
  * @property bool $fatal
- * @property string|null $decay
- * @property array<string, mixed> $evidence
+ * @property string $decay
+ * @property array<string, mixed>|null $evidence
  * @property string|null $reason
- * @property CarbonInterface|null $expires_at
  * @property CarbonInterface $created_at
+ * @property CarbonInterface|null $expires_at
  */
 class SuspicionEvent extends Model
 {
@@ -44,7 +42,9 @@ class SuspicionEvent extends Model
         return is_string($table) ? $table : 'suspicion_events';
     }
 
-    /** @return MorphTo<Model, $this> */
+    /**
+     * @return MorphTo<Model, $this>
+     */
     public function subject(): MorphTo
     {
         return $this->morphTo();

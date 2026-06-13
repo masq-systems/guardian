@@ -7,16 +7,8 @@ namespace Masq\Guardian\Support;
 use Masq\Guardian\Contracts\TrustStateContract;
 use Masq\Guardian\Enums\TrustState;
 
-/**
- * Resolves the active trust-state enum (config `state_enum`) and centralises
- * everything the engine needs, so the rest of the package never references a
- * concrete state class. Swap the enum and the whole ladder changes.
- *
- * @phpstan-type StateClass class-string<TrustStateContract>
- */
 final class States
 {
-    /** @var StateClass */
     private string $class;
 
     public function __construct(?string $class = null)
@@ -46,7 +38,9 @@ final class States
         return ($this->class)::tryFromKey($key);
     }
 
-    /** @return array<int, TrustStateContract> */
+    /**
+     * @return list<TrustStateContract>
+     */
     public function all(): array
     {
         return ($this->class)::all();
@@ -57,7 +51,6 @@ final class States
         return $a->level() > $b->level();
     }
 
-    /** Clamp a state to a ceiling (null = no clamp). */
     public function atMost(TrustStateContract $state, ?TrustStateContract $ceiling): TrustStateContract
     {
         return $ceiling !== null && $state->level() > $ceiling->level() ? $ceiling : $state;
@@ -78,7 +71,6 @@ final class States
         return $this->base()->key();
     }
 
-    /** Highest-level state that is not the terminal (ban) state. */
     public function highestBelowTerminal(): TrustStateContract
     {
         $terminal = $this->terminal();

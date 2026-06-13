@@ -10,22 +10,18 @@ use Illuminate\Database\Eloquent\Relations\MorphTo;
 use Masq\Guardian\Enums\ReviewStatus;
 
 /**
- * A subject queued for human moderation.
- *
  * @property int $id
  * @property ReviewStatus $status
- * @property string|null $reason
  * @property int $score_at_flag
- * @property array<string, mixed> $evidence
+ * @property array<string, mixed>|null $evidence
+ * @property string|null $reason
  * @property string|null $decided_by
  * @property string|null $notes
  * @property CarbonInterface|null $decided_at
  * @property CarbonInterface|null $created_at
- * @property CarbonInterface|null $updated_at
  */
 class ModeratorReview extends Model
 {
-    // String aliases for queries; `status` itself casts to ReviewStatus.
     public const STATUS_PENDING = 'pending';
 
     public const STATUS_CLEARED = 'cleared';
@@ -54,7 +50,9 @@ class ModeratorReview extends Model
         return is_string($table) ? $table : 'moderator_reviews';
     }
 
-    /** @return MorphTo<Model, $this> */
+    /**
+     * @return MorphTo<Model, $this>
+     */
     public function subject(): MorphTo
     {
         return $this->morphTo();

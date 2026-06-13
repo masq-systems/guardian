@@ -8,10 +8,6 @@ use Masq\Guardian\Contracts\Detector;
 use Masq\Guardian\Models\TrustProfile;
 use Masq\Guardian\ValueObjects\Signal;
 
-/**
- * Thin wrapper that binds every Guardian call to a single track, so you can
- * write `Guardian::track('behavior')->inspect($user, $ctx)`.
- */
 final class TrackedGuardian
 {
     public function __construct(
@@ -28,7 +24,7 @@ final class TrackedGuardian
 
     /**
      * @param  array<string, mixed>  $context
-     * @param  array<int, Detector>|null  $detectors
+     * @param  list<Detector>|null  $detectors
      */
     public function inspect(object $subject, array $context = [], ?array $detectors = null): TrustProfile
     {
@@ -52,7 +48,7 @@ final class TrackedGuardian
     }
 
     /**
-     * @param  Signal|array<int, Signal>  $signals
+     * @param  Signal|array<array-key, Signal>  $signals
      * @param  array<string, mixed>  $context
      */
     public function report(object $subject, Signal|array $signals, array $context = []): TrustProfile

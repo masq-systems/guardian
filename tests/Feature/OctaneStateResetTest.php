@@ -7,13 +7,6 @@ use Masq\Guardian\Guardian;
 use Masq\Guardian\Registry\TrackManager;
 use Masq\Guardian\ValueObjects\Signal;
 
-/**
- * Under Octane the Guardian/TrackManager singletons live for the whole worker,
- * so per-request state must be cleared between requests. These tests exercise
- * the reset methods the RequestReceived listener calls (the listener itself is
- * only wired when laravel/octane is installed).
- */
-
 it('flushRequestState() drops ad-hoc detectors so they do not bleed into the next request', function (): void {
     $detector = new class implements Detector
     {
@@ -32,7 +25,6 @@ it('flushRequestState() drops ad-hoc detectors so they do not bleed into the nex
     $guardian->register($detector);
     expect($guardian->detectors())->toContain($detector);
 
-    // Simulate the start of the next request on the same worker.
     $guardian->flushRequestState();
 
     expect($guardian->detectors())->not->toContain($detector);
@@ -45,11 +37,9 @@ it('TrackManager::flush() discards runtime registry mutations and rebuilds from 
     $keys = $tracks->registry($track)->keys();
     expect($keys)->toContain('throttle_hits');
 
-    // Disable a detector at runtime on the memoised registry...
     $tracks->registry($track)->disable('throttle_hits');
     expect($tracks->registry($track)->keys())->not->toContain('throttle_hits');
 
-    // ...then flush: the next request rebuilds tracks from the boot config.
     $tracks->flush();
 
     expect($tracks->registry($track)->keys())->toContain('throttle_hits');

@@ -66,34 +66,18 @@ final class GuardianServiceProvider extends ServiceProvider
                 __DIR__.'/../config/guardian.php' => $this->app->configPath('guardian.php'),
             ], 'guardian-config');
 
-            // Publish the package migrations into the app's database/migrations
-            // (timestamps rewritten to publish-time). Use this to own/customise
-            // the schema in-app. NOTE: if you publish, disable the auto-load
-            // below (e.g. remove the package from auto-discovery for migrations)
-            // — otherwise each migration would run twice.
             $this->publishesMigrations([
                 __DIR__.'/../database/migrations' => $this->app->databasePath('migrations'),
             ], 'guardian-migrations');
         }
 
-        // Zero-config: run package migrations in place without publishing.
         $this->loadMigrationsFrom(__DIR__.'/../database/migrations');
 
-        // Route middleware: ->middleware('guardian:banned') or 'guardian:review,behavior'
         $this->app->make(Router::class)->aliasMiddleware('guardian', EnforceTrust::class);
 
         $this->resetRequestStateOnOctane();
     }
 
-    /**
-     * Under Laravel Octane the worker stays alive across requests, so the
-     * Guardian and TrackManager singletons keep their in-memory state. Two
-     * pieces of that state are per-request by contract — ad-hoc detectors from
-     * Guardian::register() and any runtime registry define()/disable() — and
-     * must be cleared at the start of each request so one request can't see
-     * another's detectors. We only reset state that was actually resolved, and
-     * the whole hook is skipped (no-op) when Octane isn't installed.
-     */
     private function resetRequestStateOnOctane(): void
     {
         if (! class_exists(RequestReceived::class)) {

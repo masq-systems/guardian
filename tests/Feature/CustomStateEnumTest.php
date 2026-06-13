@@ -5,12 +5,11 @@ declare(strict_types=1);
 use Masq\Guardian\Contracts\TrustStateContract;
 use Masq\Guardian\ValueObjects\Signal;
 
-/** A consumer-defined ladder with an extra rung ("probation"). */
 enum FineState: string implements TrustStateContract
 {
     case Ok = 'ok';
     case Watch = 'watch';
-    case Probation = 'probation';   // extra step
+    case Probation = 'probation';
     case Review = 'review';
     case Gone = 'gone';
 
@@ -57,7 +56,7 @@ enum FineState: string implements TrustStateContract
 }
 
 beforeEach(function (): void {
-    // Swap the ladder BEFORE Guardian is first resolved this test.
+
     config()->set('guardian.state_enum', FineState::class);
     config()->set('guardian.tracks.default', [
         'thresholds' => [
@@ -76,7 +75,7 @@ beforeEach(function (): void {
 it('uses the custom enum and reaches the extra step', function (): void {
     $user = makeUser();
 
-    $user->raiseSuspicion(Signal::soft('x', 55, decay: 'none')); // 55 -> Probation
+    $user->raiseSuspicion(Signal::soft('x', 55, decay: 'none'));
 
     expect($user->fresh()->trustState())->toBe(FineState::Probation)
         ->and($user->fresh()->trustState()->key())->toBe('probation');
@@ -85,7 +84,7 @@ it('uses the custom enum and reaches the extra step', function (): void {
 it('still clamps soft points to the custom soft_max_state', function (): void {
     $user = makeUser();
 
-    $user->raiseSuspicion(Signal::soft('x', 500, decay: 'none')); // would be Gone, clamped to Review
+    $user->raiseSuspicion(Signal::soft('x', 500, decay: 'none'));
 
     expect($user->fresh()->trustState())->toBe(FineState::Review)
         ->and($user->fresh()->isBanned())->toBeFalse();

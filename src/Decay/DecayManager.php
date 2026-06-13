@@ -7,7 +7,6 @@ namespace Masq\Guardian\Decay;
 use InvalidArgumentException;
 use Masq\Guardian\Contracts\DecayStrategy;
 
-/** Resolves a decay strategy instance from its config key, caching instances. */
 final class DecayManager
 {
     /** @var array<string, DecayStrategy> */
@@ -38,13 +37,18 @@ final class DecayManager
             throw new InvalidArgumentException("Unknown Guardian decay strategy [{$key}].");
         }
 
-        /** @var class-string<DecayStrategy> $class */
         $class = $definition['class'];
         $args = $definition;
         unset($args['class']);
 
-        return $this->resolved[$key] = $args === []
+        $instance = $args === []
             ? new $class
             : new $class(...array_values($args));
+
+        if (! $instance instanceof DecayStrategy) {
+            throw new InvalidArgumentException("Guardian decay strategy [{$key}] must implement ".DecayStrategy::class.'.');
+        }
+
+        return $this->resolved[$key] = $instance;
     }
 }

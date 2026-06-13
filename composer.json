@@ -48,6 +48,7 @@
         "lint": "pint",
         "lint:test": "pint --test",
         "stan": "phpstan analyse",
+        "baseline": "phpstan analyse --generate-baseline --allow-empty-baseline",
         "check": [
             "@lint:test",
             "@stan",

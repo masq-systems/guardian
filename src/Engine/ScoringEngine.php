@@ -20,18 +20,6 @@ use Masq\Guardian\Support\States;
 use Masq\Guardian\Support\TrustCache;
 use Masq\Guardian\ValueObjects\Signal;
 
-/**
- * Core scoring logic, evaluated independently per track. Persists signals,
- * recomputes the live (decayed) score, resolves the trust state and runs
- * state-entry actions.
- *
- * The state ladder itself is pluggable (see Support\States) — this engine never
- * names a concrete state.
- *
- * Safety rule: accumulated soft points can never produce a permanent ban — they
- * are clamped to the track's `soft_max_state` (default Review). Only a *fatal*
- * hard signal moves a subject to the terminal (banned) state automatically.
- */
 final class ScoringEngine
 {
     public function __construct(
@@ -42,7 +30,7 @@ final class ScoringEngine
     ) {}
 
     /**
-     * @param  Signal|array<int, Signal>  $signals
+     * @param  Signal|array<array-key, Signal>  $signals
      * @param  array<string, mixed>  $context
      */
     public function report(object $subject, Signal|array $signals, array $context, string $track): TrustProfile
@@ -61,18 +49,15 @@ final class ScoringEngine
         return $this->evaluate($subject, $context, $fatal, $track);
     }
 
-    /** Recompute a track's decayed score and adjust state. Never auto-unbans. */
     public function reassess(object $subject, string $track): TrustProfile
     {
         return $this->evaluate($subject, [], false, $track);
     }
 
-    /** Forgive a subject in a track: wipe its events and reset to the base state. */
     public function clear(object $subject, string $track): TrustProfile
     {
         $subject->suspicionEvents()->where('track', $track)->delete();
 
-        /** @var TrustProfile $profile */
         $profile = $subject->trustProfiles()->firstOrNew(['track' => $track]);
         $previous = $profile->exists ? $this->states->fromKey((string) $profile->state) : $this->states->base();
 
@@ -98,7 +83,6 @@ final class ScoringEngine
         $decayKey = $signal->decay ?? $decay->defaultKey();
         $strategy = $decay->resolve($decayKey);
 
-        /** @var SuspicionEvent $event */
         $event = $subject->suspicionEvents()->create([
             'track' => $track,
             'detector' => $signal->detector,
@@ -124,7 +108,6 @@ final class ScoringEngine
         $config = $this->tracks->config($track);
         $score = $this->liveScore($subject, $now, $track);
 
-        /** @var TrustProfile $profile */
         $profile = $subject->trustProfiles()->firstOrNew(['track' => $track]);
         $previous = $profile->exists ? $this->states->fromKey((string) $profile->state) : $this->states->base();
 
@@ -190,13 +173,16 @@ final class ScoringEngine
      */
     private function stateForScore(int $score, array $config): TrustStateContract
     {
-        /** @var array<int, TrustStateContract> $thresholds */
+
         $thresholds = $config['thresholds'] ?? [0 => $this->states->base()];
+        if (! is_array($thresholds)) {
+            $thresholds = [0 => $this->states->base()];
+        }
         ksort($thresholds);
 
         $state = $this->states->base();
         foreach ($thresholds as $boundary => $candidate) {
-            if ($score >= $boundary) {
+            if (is_numeric($boundary) && $score >= $boundary && $candidate instanceof TrustStateContract) {
                 $state = $candidate;
             }
         }
@@ -235,14 +221,13 @@ final class ScoringEngine
 
     /**
      * @param  array<string, mixed>  $config
-     * @return array<int, class-string<Action>>
+     * @return list<string>
      */
     private function actionsFor(TrustStateContract $state, array $config): array
     {
-        /** @var array<int, class-string<Action>> $resolved */
+
         $resolved = [];
 
-        /** @var array<int|string, mixed> $entries */
         $entries = is_array($config['actions'] ?? null) ? $config['actions'] : [];
 
         foreach ($entries as $key => $value) {
@@ -260,7 +245,7 @@ final class ScoringEngine
             if ($isMatch) {
                 foreach ($actions as $action) {
                     if (is_string($action)) {
-                        /** @var class-string<Action> $action */
+
                         $resolved[] = $action;
                     }
                 }

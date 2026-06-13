@@ -9,13 +9,11 @@ use Masq\Guardian\Contracts\TrustStateContract;
 use Masq\Guardian\Events\SubjectBanned;
 use Masq\Guardian\Support\States;
 
-/**
- * Apply an automatic ban. Only ever runs for the terminal (banned) state, which
- * the engine reaches automatically only on a fatal hard signal. Calls the
- * configurable ban method on the subject if present, then fires SubjectBanned.
- */
 final class BanAction implements Action
 {
+    /**
+     * @param  array<string, mixed>  $context
+     */
     public function handle(object $subject, TrustStateContract $state, array $context = []): void
     {
         if (! app(States::class)->isTerminal($state)) {
