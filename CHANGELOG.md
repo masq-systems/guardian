@@ -15,6 +15,15 @@ All notable changes to `masq/guardian` will be documented in this file.
   isn't installed. Config-file detector setup is unaffected.
 
 ### Added
+- **Record-level invalid marks (`Flaggable`).** A new polymorphic
+  `guardian_flags` table + `Models\GuardianFlag` + `Concerns\Flaggable` trait
+  let any model mark individual *records* invalid (e.g. one day of activity),
+  with no per-table column. Where `Guardable` scores a *subject* over time,
+  `Flaggable` marks a single record as not-to-be-counted — the data is never
+  deleted, only marked, and the mark is reversible (`flagged` → moderator
+  `cleared`/`confirmed`). Helpers: `$record->flagAsInvalid(reason, evidence)`,
+  `clearAutoFlags()`, `isGuardianFlagged()`, and query scopes
+  `guardianValid()` / `guardianFlagged()` (track-aware). Migration auto-loads.
 - Trait convenience methods `$user->ban($reason = null)` and `$user->unban()`
   (delegate to `Guardian::ban()` / `Guardian::clear()`, track-aware).
 - **Pluggable state ladder**: states are defined by an enum implementing
