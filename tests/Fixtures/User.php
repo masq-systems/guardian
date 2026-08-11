@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Masq\Guardian\Tests\Fixtures;
+namespace Guardian\Tests\Fixtures;
 
 use Illuminate\Database\Eloquent\Model;
-use Masq\Guardian\Concerns\Guardable;
-use Masq\Guardian\Enums\TrustState;
+use Guardian\Concerns\Guardable;
+use Guardian\Enums\TrustState;
 
 class User extends Model
 {

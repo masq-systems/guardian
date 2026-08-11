@@ -2,8 +2,8 @@
 
 declare(strict_types=1);
 
-use Masq\Guardian\Enums\TrustState;
-use Masq\Guardian\Facades\Guardian;
+use Guardian\Enums\TrustState;
+use Guardian\Facades\Guardian;
 
 it('does not score throttle hits below the threshold', function (): void {
     $user = makeUser();

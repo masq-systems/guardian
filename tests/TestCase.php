@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Masq\Guardian\Tests;
+namespace Guardian\Tests;
 
-use Masq\Guardian\GuardianServiceProvider;
+use Guardian\GuardianServiceProvider;
 use Orchestra\Testbench\TestCase as Orchestra;
 
 abstract class TestCase extends Orchestra

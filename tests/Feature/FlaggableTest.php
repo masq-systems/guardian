@@ -2,8 +2,8 @@
 
 declare(strict_types=1);
 
-use Masq\Guardian\Models\GuardianFlag;
-use Masq\Guardian\Tests\Fixtures\FlaggableRecord;
+use Guardian\Models\GuardianFlag;
+use Guardian\Tests\Fixtures\FlaggableRecord;
 
 it('marks a record invalid and excludes it from the valid scope', function (): void {
     $a = FlaggableRecord::create(['name' => 'a']);

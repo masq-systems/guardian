@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace Masq\Guardian\Registry;
+namespace Guardian\Registry;
 
 use Illuminate\Contracts\Container\Container;
 use InvalidArgumentException;
-use Masq\Guardian\Contracts\Detector;
-use Masq\Guardian\Support\EnumValue;
+use Guardian\Contracts\Detector;
+use Guardian\Support\EnumValue;
 
 final class DetectorRegistry
 {

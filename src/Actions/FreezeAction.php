@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Masq\Guardian\Actions;
+namespace Guardian\Actions;
 
-use Masq\Guardian\Contracts\Action;
-use Masq\Guardian\Contracts\TrustStateContract;
+use Guardian\Contracts\Action;
+use Guardian\Contracts\TrustStateContract;
 
 final class FreezeAction implements Action
 {

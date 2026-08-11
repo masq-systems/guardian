@@ -2,17 +2,17 @@
 
 declare(strict_types=1);
 
-namespace Masq\Guardian\Facades;
+namespace Guardian\Facades;
 
 use BackedEnum;
 use Illuminate\Support\Facades\Facade;
-use Masq\Guardian\Contracts\Detector;
-use Masq\Guardian\Engine\ScoringEngine;
-use Masq\Guardian\Guardian as GuardianManager;
-use Masq\Guardian\Models\TrustProfile;
-use Masq\Guardian\Registry\DetectorRegistry;
-use Masq\Guardian\TrackedGuardian;
-use Masq\Guardian\ValueObjects\Signal;
+use Guardian\Contracts\Detector;
+use Guardian\Engine\ScoringEngine;
+use Guardian\Guardian as GuardianManager;
+use Guardian\Models\TrustProfile;
+use Guardian\Registry\DetectorRegistry;
+use Guardian\TrackedGuardian;
+use Guardian\ValueObjects\Signal;
 use UnitEnum;
 
 /**

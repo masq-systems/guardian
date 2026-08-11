@@ -3,10 +3,10 @@
 declare(strict_types=1);
 
 use Illuminate\Support\Facades\Event;
-use Masq\Guardian\Enums\TrustState;
-use Masq\Guardian\Events\SubjectBanned;
-use Masq\Guardian\Models\ModeratorReview;
-use Masq\Guardian\ValueObjects\Signal;
+use Guardian\Enums\TrustState;
+use Guardian\Events\SubjectBanned;
+use Guardian\Models\ModeratorReview;
+use Guardian\ValueObjects\Signal;
 
 it('bans immediately on a fatal hard signal', function (): void {
     Event::fake([SubjectBanned::class]);

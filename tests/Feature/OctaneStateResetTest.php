@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-use Masq\Guardian\Contracts\Detector;
-use Masq\Guardian\Guardian;
-use Masq\Guardian\Registry\TrackManager;
-use Masq\Guardian\ValueObjects\Signal;
+use Guardian\Contracts\Detector;
+use Guardian\Guardian;
+use Guardian\Registry\TrackManager;
+use Guardian\ValueObjects\Signal;
 
 it('flushRequestState() drops ad-hoc detectors so they do not bleed into the next request', function (): void {
     $detector = new class implements Detector

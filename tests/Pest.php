@@ -3,8 +3,8 @@
 declare(strict_types=1);
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Masq\Guardian\Tests\Fixtures\User;
-use Masq\Guardian\Tests\TestCase;
+use Guardian\Tests\Fixtures\User;
+use Guardian\Tests\TestCase;
 
 uses(TestCase::class, RefreshDatabase::class)->in(__DIR__);
 

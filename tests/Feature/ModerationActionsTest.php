@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-use Masq\Guardian\Enums\TrustState;
-use Masq\Guardian\Facades\Guardian;
-use Masq\Guardian\ValueObjects\Signal;
+use Guardian\Enums\TrustState;
+use Guardian\Facades\Guardian;
+use Guardian\ValueObjects\Signal;
 
 enum BanReason: string
 {

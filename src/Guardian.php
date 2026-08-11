@@ -2,17 +2,17 @@
 
 declare(strict_types=1);
 
-namespace Masq\Guardian;
+namespace Guardian;
 
 use Illuminate\Contracts\Container\Container;
-use Masq\Guardian\Contracts\Detector;
-use Masq\Guardian\Engine\ScoringEngine;
-use Masq\Guardian\Models\TrustProfile;
-use Masq\Guardian\Registry\DetectorRegistry;
-use Masq\Guardian\Registry\TrackManager;
-use Masq\Guardian\Support\EnumValue;
-use Masq\Guardian\Support\TrustCache;
-use Masq\Guardian\ValueObjects\Signal;
+use Guardian\Contracts\Detector;
+use Guardian\Engine\ScoringEngine;
+use Guardian\Models\TrustProfile;
+use Guardian\Registry\DetectorRegistry;
+use Guardian\Registry\TrackManager;
+use Guardian\Support\EnumValue;
+use Guardian\Support\TrustCache;
+use Guardian\ValueObjects\Signal;
 
 final class Guardian
 {

@@ -1,6 +1,6 @@
 {
     "$schema": "https://getcomposer.org/schema.json",
-    "name": "masq/guardian",
+    "name": "rolandverner/guardian",
     "description": "Suspicion-scoring trust & moderation engine for Laravel. Pluggable detectors accrue suspicion points; thresholds flag, restrict, queue for review, or ban.",
     "keywords": [
         "laravel",
@@ -16,7 +16,7 @@
     "type": "library",
     "authors": [
         {
-            "name": "Masq Systems"
+            "name": "Roland Verner"
         }
     ],
     "require": {
@@ -34,12 +34,12 @@
     },
     "autoload": {
         "psr-4": {
-            "Masq\\Guardian\\": "src/"
+            "Guardian\\": "src/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Masq\\Guardian\\Tests\\": "tests/"
+            "Guardian\\Tests\\": "tests/"
         }
     },
     "scripts": {
@@ -64,10 +64,10 @@
     "extra": {
         "laravel": {
             "providers": [
-                "Masq\\Guardian\\GuardianServiceProvider"
+                "Guardian\\GuardianServiceProvider"
             ],
             "aliases": {
-                "Guardian": "Masq\\Guardian\\Facades\\Guardian"
+                "Guardian": "Guardian\\Facades\\Guardian"
             }
         }
     },

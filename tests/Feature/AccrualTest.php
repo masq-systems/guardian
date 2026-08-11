@@ -2,8 +2,8 @@
 
 declare(strict_types=1);
 
-use Masq\Guardian\Enums\TrustState;
-use Masq\Guardian\ValueObjects\Signal;
+use Guardian\Enums\TrustState;
+use Guardian\ValueObjects\Signal;
 
 it('escalates trust state as soft points accrue', function (): void {
     $user = makeUser();

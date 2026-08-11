@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace Masq\Guardian\Concerns;
+namespace Guardian\Concerns;
 
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
-use Masq\Guardian\Facades\Guardian;
-use Masq\Guardian\Models\GuardianFlag;
+use Guardian\Facades\Guardian;
+use Guardian\Models\GuardianFlag;
 
 trait Flaggable
 {

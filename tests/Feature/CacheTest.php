@@ -2,8 +2,8 @@
 
 declare(strict_types=1);
 
-use Masq\Guardian\Support\TrustCache;
-use Masq\Guardian\ValueObjects\Signal;
+use Guardian\Support\TrustCache;
+use Guardian\ValueObjects\Signal;
 
 it('serves trust standing from the cache, not the database', function (): void {
     $user = makeUser();

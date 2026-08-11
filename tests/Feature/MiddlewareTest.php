@@ -3,9 +3,9 @@
 declare(strict_types=1);
 
 use Illuminate\Http\Request;
-use Masq\Guardian\Facades\Guardian;
-use Masq\Guardian\Http\Middleware\EnforceTrust;
-use Masq\Guardian\ValueObjects\Signal;
+use Guardian\Facades\Guardian;
+use Guardian\Http\Middleware\EnforceTrust;
+use Guardian\ValueObjects\Signal;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 
 function runMiddleware(object $user, string $state = 'banned', ?string $track = null): string

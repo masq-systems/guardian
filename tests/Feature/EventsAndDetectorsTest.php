@@ -3,13 +3,13 @@
 declare(strict_types=1);
 
 use Illuminate\Support\Facades\Event;
-use Masq\Guardian\Contracts\Detector;
-use Masq\Guardian\Enums\TrustState;
-use Masq\Guardian\Events\SentToReview;
-use Masq\Guardian\Events\SuspicionRaised;
-use Masq\Guardian\Events\ThresholdCrossed;
-use Masq\Guardian\Facades\Guardian;
-use Masq\Guardian\ValueObjects\Signal;
+use Guardian\Contracts\Detector;
+use Guardian\Enums\TrustState;
+use Guardian\Events\SentToReview;
+use Guardian\Events\SuspicionRaised;
+use Guardian\Events\ThresholdCrossed;
+use Guardian\Facades\Guardian;
+use Guardian\ValueObjects\Signal;
 
 it('dispatches events as suspicion is raised and thresholds cross', function (): void {
     Event::fake([SuspicionRaised::class, ThresholdCrossed::class, SentToReview::class]);

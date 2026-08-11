@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Masq\Guardian\Jobs;
+namespace Guardian\Jobs;
 
 use Carbon\CarbonImmutable;
 use Illuminate\Bus\Queueable;
@@ -10,9 +10,9 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
-use Masq\Guardian\Facades\Guardian;
-use Masq\Guardian\Models\SuspicionEvent;
-use Masq\Guardian\Models\TrustProfile;
+use Guardian\Facades\Guardian;
+use Guardian\Models\SuspicionEvent;
+use Guardian\Models\TrustProfile;
 
 class ReevaluateTrust implements ShouldQueue
 {

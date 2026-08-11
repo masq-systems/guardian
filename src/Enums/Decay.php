@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Masq\Guardian\Enums;
+namespace Guardian\Enums;
 
 enum Decay: string
 {

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Masq\Guardian\Contracts;
+namespace Guardian\Contracts;
 
 use Carbon\CarbonInterface;
 

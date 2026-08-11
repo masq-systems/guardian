@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Masq\Guardian\Support;
+namespace Guardian\Support;
 
-use Masq\Guardian\Contracts\TrustStateContract;
-use Masq\Guardian\Enums\TrustState;
+use Guardian\Contracts\TrustStateContract;
+use Guardian\Enums\TrustState;
 
 final class States
 {

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Masq\Guardian\Concerns;
+namespace Guardian\Concerns;
 
 trait Suspectable
 {

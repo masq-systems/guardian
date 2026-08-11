@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Masq\Guardian\Http\Middleware;
+namespace Guardian\Http\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
-use Masq\Guardian\Support\States;
+use Guardian\Support\States;
 use Symfony\Component\HttpFoundation\Response;
 
 final class EnforceTrust

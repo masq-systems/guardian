@@ -1,4 +1,4 @@
-# Masq Guardian
+# Guardian
 
 A trust & abuse-scoring engine for Laravel.
 
@@ -54,7 +54,7 @@ different points, thresholds, detectors and bans, scored separately.
 ## Install
 
 ```bash
-composer require masq/guardian
+composer require rolandverner/guardian
 php artisan vendor:publish --tag=guardian-config   # optional: gives you config/guardian.php
 php artisan migrate                                 # migrations auto-load
 ```
@@ -62,14 +62,14 @@ php artisan migrate                                 # migrations auto-load
 Add the `Guardable` trait to the model you want to score:
 
 ```php
-use Masq\Guardian\Concerns\Guardable;
+use Guardian\Concerns\Guardable;
 
 class User extends Authenticatable
 {
     use Guardable;
 
     // Optional hooks Guardian calls when a state is entered:
-    public function guardianRestrict(\Masq\Guardian\Enums\TrustState $state, array $ctx = []): void
+    public function guardianRestrict(\Guardian\Enums\TrustState $state, array $ctx = []): void
     {
         // soft restriction — e.g. freeze rewards
     }
@@ -86,7 +86,7 @@ class User extends Authenticatable
 ## Quick start
 
 ```php
-use Masq\Guardian\ValueObjects\Signal;
+use Guardian\ValueObjects\Signal;
 
 // 1. Record an observation (points fade with the default decay)
 $user->raiseSuspicion(Signal::soft('login_velocity', 15, ['ip' => $ip]));
@@ -137,7 +137,7 @@ Run the maintenance job daily so subjects recover as points fade:
 ```php
 // routes/console.php
 use Illuminate\Support\Facades\Schedule;
-use Masq\Guardian\Jobs\ReevaluateTrust;
+use Guardian\Jobs\ReevaluateTrust;
 
 Schedule::job(new ReevaluateTrust)->daily();
 ```
@@ -165,12 +165,12 @@ clamp (riskier — soft points can then ban).
 #### Custom states (your own ladder)
 
 The five states are the **default** ladder. To add or rename rungs, define your
-own enum implementing `Masq\Guardian\Contracts\TrustStateContract` and point
+own enum implementing `Guardian\Contracts\TrustStateContract` and point
 `state_enum` at it — your cases are then used everywhere (thresholds, actions,
 middleware, reads), with full type-safety:
 
 ```php
-use Masq\Guardian\Contracts\TrustStateContract;
+use Guardian\Contracts\TrustStateContract;
 
 enum TrustState: string implements TrustStateContract
 {
@@ -205,8 +205,8 @@ A detector is a reusable check. It implements one method and reads its own
 config options:
 
 ```php
-use Masq\Guardian\Detectors\AbstractDetector;
-use Masq\Guardian\ValueObjects\Signal;
+use Guardian\Detectors\AbstractDetector;
+use Guardian\ValueObjects\Signal;
 
 final class RateLimitDetector extends AbstractDetector
 {
@@ -269,7 +269,7 @@ value *or* name) — both are accepted:
 Shipped actions: `FreezeAction` (calls your `guardianRestrict()`),
 `QueueForReviewAction` (opens a deduplicated `ModeratorReview` with an evidence
 snapshot), `BanAction` (calls your `guardianBan()` + fires `SubjectBanned`).
-Write your own by implementing `Masq\Guardian\Contracts\Action`.
+Write your own by implementing `Guardian\Contracts\Action`.
 
 ### Tracks
 
@@ -314,7 +314,7 @@ once the count passes the allowance. Soft by design — it escalates toward
 
 ```php
 'throttle_hits' => [
-    'class'                => Masq\Guardian\Detectors\ThrottleHitDetector::class,
+    'class'                => Guardian\Detectors\ThrottleHitDetector::class,
     'enabled'              => true,
     'allowed_hits'         => 5,    // free hits inside the window
     'window_seconds'       => 900,  // counter window (used to size the cache TTL)
@@ -349,7 +349,7 @@ Guardian::clear($user);                      // false positive -> forgive + unba
 
 `clear()` wipes the subject's events for that track and resets it to `trusted`
 (also lifts a ban). Open cases live in the `moderator_reviews` table
-(`Masq\Guardian\Models\ModeratorReview`) with an evidence snapshot — list and
+(`Guardian\Models\ModeratorReview`) with an evidence snapshot — list and
 resolve them from your admin UI.
 
 ### Events
@@ -360,7 +360,7 @@ Hook listeners onto any of: `SuspicionRaised`, `ThresholdCrossed`,
 ```php
 class AlertModerators
 {
-    public function handle(\Masq\Guardian\Events\SentToReview $event): void
+    public function handle(\Guardian\Events\SentToReview $event): void
     {
         // $event->subject, $event->review->evidence
     }
@@ -411,7 +411,7 @@ return [
 
 ## API cheat-sheet
 
-Facade `Masq\Guardian\Facades\Guardian` (every method takes an optional final
+Facade `Guardian\Facades\Guardian` (every method takes an optional final
 `track`; or bind one with `Guardian::track('x')->...`):
 
 | call | does |
@@ -447,4 +447,4 @@ composer lint     # pint
 
 ## License
 
-MIT © Masq Systems.
+MIT © Roland Verner.

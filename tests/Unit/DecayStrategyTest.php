@@ -3,9 +3,9 @@
 declare(strict_types=1);
 
 use Carbon\CarbonImmutable;
-use Masq\Guardian\Decay\HalfLifeDecay;
-use Masq\Guardian\Decay\LinearDecay;
-use Masq\Guardian\Decay\NoDecay;
+use Guardian\Decay\HalfLifeDecay;
+use Guardian\Decay\LinearDecay;
+use Guardian\Decay\NoDecay;
 
 it('keeps all points with NoDecay', function (): void {
     $strategy = new NoDecay;

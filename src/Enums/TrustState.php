@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Masq\Guardian\Enums;
+namespace Guardian\Enums;
 
-use Masq\Guardian\Contracts\TrustStateContract;
+use Guardian\Contracts\TrustStateContract;
 
 enum TrustState: string implements TrustStateContract
 {

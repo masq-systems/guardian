@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace Masq\Guardian\Actions;
+namespace Guardian\Actions;
 
-use Masq\Guardian\Contracts\Action;
-use Masq\Guardian\Contracts\TrustStateContract;
-use Masq\Guardian\Events\SubjectBanned;
-use Masq\Guardian\Support\States;
+use Guardian\Contracts\Action;
+use Guardian\Contracts\TrustStateContract;
+use Guardian\Events\SubjectBanned;
+use Guardian\Support\States;
 
 final class BanAction implements Action
 {

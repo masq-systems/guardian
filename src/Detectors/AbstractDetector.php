@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Masq\Guardian\Detectors;
+namespace Guardian\Detectors;
 
-use Masq\Guardian\Contracts\Detector;
+use Guardian\Contracts\Detector;
 
 abstract class AbstractDetector implements Detector
 {

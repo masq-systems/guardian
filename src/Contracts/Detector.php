@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Masq\Guardian\Contracts;
+namespace Guardian\Contracts;
 
-use Masq\Guardian\ValueObjects\Signal;
+use Guardian\ValueObjects\Signal;
 
 interface Detector
 {

@@ -2,8 +2,8 @@
 
 declare(strict_types=1);
 
-use Masq\Guardian\Contracts\TrustStateContract;
-use Masq\Guardian\ValueObjects\Signal;
+use Guardian\Contracts\TrustStateContract;
+use Guardian\ValueObjects\Signal;
 
 enum FineState: string implements TrustStateContract
 {

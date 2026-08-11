@@ -1,6 +1,6 @@
 # Changelog
 
-All notable changes to `masq/guardian` will be documented in this file.
+All notable changes to `rolandverner/guardian` will be documented in this file.
 
 ## [Unreleased]
 

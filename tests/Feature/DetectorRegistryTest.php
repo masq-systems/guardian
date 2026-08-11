@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-use Masq\Guardian\Contracts\Detector;
-use Masq\Guardian\Detectors\ThrottleHitDetector;
-use Masq\Guardian\Registry\DetectorRegistry;
+use Guardian\Contracts\Detector;
+use Guardian\Detectors\ThrottleHitDetector;
+use Guardian\Registry\DetectorRegistry;
 
 it('builds enabled detectors from config and skips disabled ones', function (): void {
     $registry = new DetectorRegistry(app(), [

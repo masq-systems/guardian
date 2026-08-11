@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Masq\Guardian\Support;
+namespace Guardian\Support;
 
 use BackedEnum;
 use UnitEnum;

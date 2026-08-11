@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Masq\Guardian\Support;
+namespace Guardian\Support;
 
 use Illuminate\Contracts\Cache\Repository as CacheRepository;
 use Illuminate\Database\Eloquent\Model;
-use Masq\Guardian\Models\TrustProfile;
+use Guardian\Models\TrustProfile;
 
 final class TrustCache
 {

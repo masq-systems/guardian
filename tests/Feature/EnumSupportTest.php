@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-use Masq\Guardian\Enums\Decay;
-use Masq\Guardian\Enums\ReviewStatus;
-use Masq\Guardian\Facades\Guardian;
-use Masq\Guardian\ValueObjects\Signal;
+use Guardian\Enums\Decay;
+use Guardian\Enums\ReviewStatus;
+use Guardian\Facades\Guardian;
+use Guardian\ValueObjects\Signal;
 
 enum DetectorKey: string
 {

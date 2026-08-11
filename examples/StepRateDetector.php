@@ -15,8 +15,8 @@ declare(strict_types=1);
 
 namespace App\Guardian\Detectors;
 
-use Masq\Guardian\Detectors\AbstractDetector;
-use Masq\Guardian\ValueObjects\Signal;
+use Guardian\Detectors\AbstractDetector;
+use Guardian\ValueObjects\Signal;
 
 /**
  * Road Trip Runner anti-cheat: inspect a day's step slices.

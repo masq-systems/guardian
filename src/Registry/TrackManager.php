@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Masq\Guardian\Registry;
+namespace Guardian\Registry;
 
 use Illuminate\Contracts\Container\Container;
-use Masq\Guardian\Decay\DecayManager;
+use Guardian\Decay\DecayManager;
 
 final class TrackManager
 {

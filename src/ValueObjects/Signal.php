@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Masq\Guardian\ValueObjects;
+namespace Guardian\ValueObjects;
 
 use BackedEnum;
-use Masq\Guardian\Enums\Severity;
-use Masq\Guardian\Support\EnumValue;
+use Guardian\Enums\Severity;
+use Guardian\Support\EnumValue;
 use UnitEnum;
 
 final class Signal

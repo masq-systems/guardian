@@ -2,19 +2,19 @@
 
 declare(strict_types=1);
 
-namespace Masq\Guardian;
+namespace Guardian;
 
 use Illuminate\Contracts\Cache\Factory as CacheFactory;
 use Illuminate\Contracts\Events\Dispatcher;
 use Illuminate\Routing\Router;
 use Illuminate\Support\ServiceProvider;
 use Laravel\Octane\Events\RequestReceived;
-use Masq\Guardian\Engine\ScoringEngine;
-use Masq\Guardian\Enums\TrustState;
-use Masq\Guardian\Http\Middleware\EnforceTrust;
-use Masq\Guardian\Registry\TrackManager;
-use Masq\Guardian\Support\States;
-use Masq\Guardian\Support\TrustCache;
+use Guardian\Engine\ScoringEngine;
+use Guardian\Enums\TrustState;
+use Guardian\Http\Middleware\EnforceTrust;
+use Guardian\Registry\TrackManager;
+use Guardian\Support\States;
+use Guardian\Support\TrustCache;
 
 final class GuardianServiceProvider extends ServiceProvider
 {

@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-use Masq\Guardian\Actions\BanAction;
-use Masq\Guardian\Actions\FreezeAction;
-use Masq\Guardian\Actions\QueueForReviewAction;
-use Masq\Guardian\Decay\HalfLifeDecay;
-use Masq\Guardian\Decay\LinearDecay;
-use Masq\Guardian\Decay\NoDecay;
-use Masq\Guardian\Detectors\ThrottleHitDetector;
-use Masq\Guardian\Enums\TrustState;
+use Guardian\Actions\BanAction;
+use Guardian\Actions\FreezeAction;
+use Guardian\Actions\QueueForReviewAction;
+use Guardian\Decay\HalfLifeDecay;
+use Guardian\Decay\LinearDecay;
+use Guardian\Decay\NoDecay;
+use Guardian\Detectors\ThrottleHitDetector;
+use Guardian\Enums\TrustState;
 
 return [
 
@@ -29,7 +29,7 @@ return [
 
     /*
     | The trust-state ladder. Point this at your own enum (implementing
-    | Masq\Guardian\Contracts\TrustStateContract) to add/rename states — your
+    | Guardian\Contracts\TrustStateContract) to add/rename states — your
     | enum cases are then used everywhere (thresholds, actions, middleware).
     */
     'state_enum' => TrustState::class,

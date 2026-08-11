@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Masq\Guardian\Tests\Fixtures;
+namespace Guardian\Tests\Fixtures;
 
 use Illuminate\Database\Eloquent\Model;
-use Masq\Guardian\Concerns\Flaggable;
+use Guardian\Concerns\Flaggable;
 
 class FlaggableRecord extends Model
 {

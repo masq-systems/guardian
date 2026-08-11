@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Masq\Guardian;
+namespace Guardian;
 
-use Masq\Guardian\Contracts\Detector;
-use Masq\Guardian\Models\TrustProfile;
-use Masq\Guardian\ValueObjects\Signal;
+use Guardian\Contracts\Detector;
+use Guardian\Models\TrustProfile;
+use Guardian\ValueObjects\Signal;
 
 final class TrackedGuardian
 {

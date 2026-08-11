@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace Masq\Guardian\Actions;
+namespace Guardian\Actions;
 
-use Masq\Guardian\Contracts\Action;
-use Masq\Guardian\Contracts\TrustStateContract;
-use Masq\Guardian\Events\SentToReview;
-use Masq\Guardian\Models\ModeratorReview;
-use Masq\Guardian\Models\SuspicionEvent;
+use Guardian\Contracts\Action;
+use Guardian\Contracts\TrustStateContract;
+use Guardian\Events\SentToReview;
+use Guardian\Models\ModeratorReview;
+use Guardian\Models\SuspicionEvent;
 
 final class QueueForReviewAction implements Action
 {

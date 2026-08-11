@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-use Masq\Guardian\Actions\FreezeAction;
-use Masq\Guardian\Enums\TrustState;
-use Masq\Guardian\ValueObjects\Signal;
+use Guardian\Actions\FreezeAction;
+use Guardian\Enums\TrustState;
+use Guardian\ValueObjects\Signal;
 
 it('accepts actions keyed by the state value', function (): void {
     config()->set('guardian.tracks.default.actions', [

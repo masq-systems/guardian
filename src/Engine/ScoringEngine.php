@@ -2,23 +2,23 @@
 
 declare(strict_types=1);
 
-namespace Masq\Guardian\Engine;
+namespace Guardian\Engine;
 
 use Carbon\CarbonImmutable;
 use Illuminate\Contracts\Container\Container;
 use Illuminate\Support\Facades\DB;
-use Masq\Guardian\Contracts\Action;
-use Masq\Guardian\Contracts\TrustStateContract;
-use Masq\Guardian\Decay\DecayManager;
-use Masq\Guardian\Events\SuspicionRaised;
-use Masq\Guardian\Events\ThresholdCrossed;
-use Masq\Guardian\Models\SuspicionEvent;
-use Masq\Guardian\Models\TrustProfile;
-use Masq\Guardian\Registry\TrackManager;
-use Masq\Guardian\Support\EnumValue;
-use Masq\Guardian\Support\States;
-use Masq\Guardian\Support\TrustCache;
-use Masq\Guardian\ValueObjects\Signal;
+use Guardian\Contracts\Action;
+use Guardian\Contracts\TrustStateContract;
+use Guardian\Decay\DecayManager;
+use Guardian\Events\SuspicionRaised;
+use Guardian\Events\ThresholdCrossed;
+use Guardian\Models\SuspicionEvent;
+use Guardian\Models\TrustProfile;
+use Guardian\Registry\TrackManager;
+use Guardian\Support\EnumValue;
+use Guardian\Support\States;
+use Guardian\Support\TrustCache;
+use Guardian\ValueObjects\Signal;
 
 final class ScoringEngine
 {

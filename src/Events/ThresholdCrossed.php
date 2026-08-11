@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Masq\Guardian\Events;
+namespace Guardian\Events;
 
 use Illuminate\Foundation\Events\Dispatchable;
-use Masq\Guardian\Contracts\TrustStateContract;
+use Guardian\Contracts\TrustStateContract;
 
 class ThresholdCrossed
 {

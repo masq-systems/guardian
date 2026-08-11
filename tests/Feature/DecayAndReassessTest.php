@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-use Masq\Guardian\Enums\TrustState;
-use Masq\Guardian\Facades\Guardian;
-use Masq\Guardian\Jobs\ReevaluateTrust;
-use Masq\Guardian\ValueObjects\Signal;
+use Guardian\Enums\TrustState;
+use Guardian\Facades\Guardian;
+use Guardian\Jobs\ReevaluateTrust;
+use Guardian\ValueObjects\Signal;
 
 it('lowers the score and state as linear-decay points fade', function (): void {
     $user = makeUser();

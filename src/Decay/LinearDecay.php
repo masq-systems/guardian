@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Masq\Guardian\Decay;
+namespace Guardian\Decay;
 
 use Carbon\CarbonInterface;
-use Masq\Guardian\Contracts\DecayStrategy;
+use Guardian\Contracts\DecayStrategy;
 
 final class LinearDecay implements DecayStrategy
 {

@@ -2,17 +2,17 @@
 
 declare(strict_types=1);
 
-namespace Masq\Guardian\Concerns;
+namespace Guardian\Concerns;
 
 use Illuminate\Database\Eloquent\Relations\MorphMany;
-use Masq\Guardian\Contracts\TrustStateContract;
-use Masq\Guardian\Facades\Guardian;
-use Masq\Guardian\Models\ModeratorReview;
-use Masq\Guardian\Models\SuspicionEvent;
-use Masq\Guardian\Models\TrustProfile;
-use Masq\Guardian\Support\States;
-use Masq\Guardian\Support\TrustCache;
-use Masq\Guardian\ValueObjects\Signal;
+use Guardian\Contracts\TrustStateContract;
+use Guardian\Facades\Guardian;
+use Guardian\Models\ModeratorReview;
+use Guardian\Models\SuspicionEvent;
+use Guardian\Models\TrustProfile;
+use Guardian\Support\States;
+use Guardian\Support\TrustCache;
+use Guardian\ValueObjects\Signal;
 
 trait Guardable
 {
